@@ -1,68 +1,74 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Overview
+In this challenge, we will focus on creating three components that we will later use as we create a news site similar to [Reddit](https://www.reddit.com/).
 
-## Available Scripts
+Each of the three components listed below has been stubbed out - your mission is to create the content that the component should `render`, and handle the `props` that are being passed in appropriately. It's also your decision on whether your components should be functional components or class components. There's no wrong answer here. Here are some guidelines to help you decide:
+- If your component simply renders text to the screen (whether passed by props or not), use functional components
+- If it does much more than that (e.g., doing a lot with state or using lifecycle methods), use class components.
 
-In the project directory, you can run:
+All of the components today have been stubbed out as class components. If you want to change them to functional components, feel free to do so.
 
-### `npm start`
+While these components can be viewed in your browser by running `npm run start`, there are unit tests already created that test the component behaviors specified below.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Tests
+You can run the provided tests at any time with `npm test`. If you get errors you may have to run the following commands:
+```sh
+$ npm uninstall watchman -g
+$ brew install watchman
+$ npm install 
+$ npm test 
+```
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Component I: ArticleTeaser
+The `ArticleTeaser` component should accept the following `props` from `App.js`:
+1. `id` - a number
+2. `title` - a string
+3. `created_date` - a string
+4. `handleTitleClick` - a event handling function
 
-### `npm test`
+All of these `props` will always be passed in.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The `ArticleTeaser` component should:
+1. Display the `title` inside of an `<a>` tag.
+2. When the `title` `<a>` tag is clicked, it should call `this.props.handleTitleClick(this.props.id);`. Will arrow functions be useful here?
+3. Display the `created_date` in a `<p>` tag.
 
-### `npm run build`
+**Do you think ArticleTeaser should be a functional component or class component?**
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Component II: Article
+The `Article` component should accept the following `props`:
+1. `title` - a string
+2. `created_date` - a string
+3. `abstract` - a string
+4. `byline` - a string (optional)
+5. `image` - a url string (optional)
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+The `title`, `abstract`, and `created_date` `props` will always contain values. `image` and `byline` may be set, but they may also be null. Be sure to account for this.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The `Article` component should:
+1. Display the `title` inside of an `<h1>` tag.
+2. Display the `created_date` in a `<p>` tag.
+3. Display the `byline` (if it exists) in an `<h2>` tag.
+4. Display the `image` (if it exists) in an `<img>` tag (the value of `image` should be set to the `src` attribute of the `<img>` tag).
+5. Display the `abstract` inside of a `<p>` tag.
 
-### `npm run eject`
+**Do you think Article should be a functional component or class component?**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Component III: AppNav
+The `AppNav` component should accept the following `props`:
+1. `navItems` - an array of navItem objects.
+2. `handleNavClick` - a function. Will arrow functions be useful here?
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+The `AppNav` component should return a `<nav>` component that contains `<a>`'s as children - one for every item in the `this.props.navItems` array.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+The AppNav component should:
+1) Map through `this.props.navItems` to create an array of `<a>` elements. The objects within `this.props.navItems` look something like this:
+```
+{
+ label: "NYREGION",
+ value: "nyregion"
+}
+```
+When transforming/mapping the `nav` item objects in `this.props.navItems` into an array of `<a>` tags, you'll want to use the `label` property (displayed in the example above) as the text that appears on screen. At the same time, you will want to attach an event handler to each `<a>`'s `onClick` event. `onClick` should call `this.props.handleNavClick`, and pass the 'value' property from the `nav` item object.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+**Do you think AppNav should be a functional component or class component?**

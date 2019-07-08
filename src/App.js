@@ -1,26 +1,82 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import News from './data/news.json';
 import './App.css';
+import AppNav from './components/AppNav/AppNav.js';
+import ArticleTeaser from './components/ArticleTeaser/ArticleTeaser.js'
+import Article from './components/Article/Article.js'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props);
+    const randomArticleIndex = Math.floor(Math.random() * News.length);
+    const randomArticle = News[randomArticleIndex];
+    this.state = {
+      navItems: [
+        {
+          label: "HOME",
+          value: "home"
+        },
+        {
+          label: "OPINION",
+          value: "opinion"
+        },
+        {
+          label: "WORLD",
+          value: "world"
+        },
+        {
+          label: "NATIONAL",
+          value: "national"
+        },
+        {
+          label: "POLITICS",
+          value: "politics"
+        },
+        {
+          label: "UPSHOT",
+          value: "upshot"
+        },
+        {
+          label: "NY REGION",
+          value: "nyregion"
+        },
+        {
+          label: "BUSINESS",
+          value: "business"
+        }
+      ],
+      article: {
+        id: randomArticleIndex,
+        title: randomArticle.title,
+        abstract: randomArticle.abstract,
+        byline: randomArticle.byline,
+        image: randomArticle.multimedia.length ? randomArticle.multimedia[0].url : null,
+        created_date: randomArticle.created_date
+      }
+    }
+  }
+
+  render() {
+    const {article, navItems} = this.state
+    console.log(article)
+    return (
+      <div>
+        <h1>AppNav Component</h1>
+        <hr />
+        <AppNav navItems={navItems} handleNavClick={(clickedItem) => console.log(clickedItem)} />
+        <h1>ArticleTeaser Component</h1>
+        <hr />
+        <ArticleTeaser 
+          id={article.id}
+          title={article.title}
+          created_date={article.created_date}
+          handleTitleClick={(articleID) => console.log(articleID)} />
+        <h1>Article Component</h1>
+        <hr />
+        <Article {...article} />
+      </div>
+    );
+  }
 }
 
 export default App;
